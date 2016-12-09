@@ -1,0 +1,17 @@
+#test imgx imgy coord
+import PhotoScan
+chunk=PhotoScan.app.document.chunk
+markers=chunk.markers
+v0prset=markers[0].projections.keys()
+# only keys is working
+v1=markers[0].position
+v1_new = chunk.transform.matrix.mulp(v1)
+v1_new = chunk.crs.project(v1_new)
+point_geocentric = chunk.crs.unproject(v1_new)
+point_internal = chunk.transform.matrix.inv().mulp(point_geocentric)
+imgx, imgy = v0prset[0].project(point_internal)
+print(v0prset)
+# imgx is related to 0-4672, from left to right
+print(imgx)
+# imgx is related to 0-3490,from left to right
+print(imgy)
